@@ -1,4 +1,4 @@
-install aws ubuntu with t3micro
+install aws linux with t3micro
 install docker and docker compose
 install jenkins
 clone code 
