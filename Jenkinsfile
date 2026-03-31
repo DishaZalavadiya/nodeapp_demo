@@ -5,16 +5,34 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/vipulitinfra/nodeapp_demo.git'
+                git branch: 'main', url: 'https://github.com/DishaZalavadiya/nodeapp_demo.git'
             }
         }
-
+        stage('install Docker') {
+            steps {
+                sh 'apt install docker.io -y'
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t nodeapp_demo:latest .'
             }
         }
-
+        stage('Start Docker Service') {
+            steps {
+                sh '''
+                sudo systemctl start docker
+                sudo systemctl enable docker
+                '''
+            }
+        }
+        stage('Add jenkins to Docker Group') {
+            steps {
+                sh '''
+                sudo usermod -aG docker jenkins
+                '''
+            }
+        }
         stage('Deploy with Docker Compose') {
             steps {
                 sh 'docker-compose down || true'
