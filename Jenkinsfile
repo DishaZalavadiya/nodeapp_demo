@@ -21,17 +21,16 @@ pipeline {
                 '''
             }
         }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t nodeapp_demo:latest .'
-            }
-        }
-        
         stage('Add jenkins to Docker Group') {
             steps {
                 sh '''
                 sudo usermod -aG docker jenkins
                 '''
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t nodeapp_demo:latest .'
             }
         }
         stage('Deploy with Docker Compose') {
