@@ -10,12 +10,7 @@ pipeline {
         }
         stage('install Docker') {
             steps {
-                sh 'apt install docker.io -y'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t nodeapp_demo:latest .'
+                sh 'sudo apt install docker.io -y'
             }
         }
         stage('Start Docker Service') {
@@ -26,6 +21,12 @@ pipeline {
                 '''
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t nodeapp_demo:latest .'
+            }
+        }
+        
         stage('Add jenkins to Docker Group') {
             steps {
                 sh '''
